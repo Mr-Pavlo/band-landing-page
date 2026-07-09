@@ -1,0 +1,737 @@
+@use "variables";
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px 130px;
+    background-color: variables.$bg-color-header;
+    color: variables.$primary-color-white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: variables.$header-height;
+
+    .header__logo {
+        font-weight: 700;
+
+        a {
+            text-decoration: none;
+            color: variables.$primary-color-white;
+        }
+    }
+
+    .header__nav {
+        position: relative;
+
+        .header__menu {
+            display: flex;
+            flex-direction: row;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .header__menu-item a {
+            color: variables.$primary-color-white;
+            text-decoration: none;
+            transition: color 0.1s ease;
+            &:hover {
+                color: variables.$primary-color-hero-btn;
+            }
+            &:active {
+                color: variables.$primary-color-black;
+            }
+        }
+    }
+
+    .header__burger-checkbox {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .header__burger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 28px;
+        height: 22px;
+        cursor: pointer;
+        position: relative;
+        z-index: 20;
+    }
+
+    .header__burger-line {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: variables.$primary-color-white;
+        transition:
+            transform 0.1s ease,
+            opacity 0.1s ease;
+    }
+
+    .header__burger-checkbox:checked ~ .header__burger {
+        .header__burger-line {
+            &:nth-child(1) {
+                transform: translateY(7px) rotate(45deg);
+            }
+            &:nth-child(2) {
+                opacity: 0;
+            }
+            &:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg);
+            }
+        }
+    }
+
+    .header__burger-checkbox:focus-visible ~ .header__burger {
+        outline: 2px solid variables.$primary-color-white;
+        outline-offset: 4px;
+        border-radius: 2px;
+    }
+
+    .header__overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.4); // рівномірне легке затемнення
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity 0.1s ease,
+            visibility 0.1s ease;
+        z-index: 15;
+        cursor: pointer;
+    }
+
+    .header__burger-checkbox:checked ~ .header__overlay {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.hero {
+    position: relative;
+    padding: variables.$padding-hero;
+    overflow: hidden;
+    scroll-margin-top: 60px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("/img/audience-band-concert-crowd-preview.jpg");
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.7);
+        z-index: -1;
+    }
+
+    h1 {
+        color: variables.$primary-color-white;
+        font-size: 38px;
+    }
+
+    b {
+        color: variables.$color_bold-skyblue;
+    }
+
+    .hero__description {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        color: variables.$primary-color-white;
+        margin-bottom: 32px;
+    }
+
+    .hero__ticket-link {
+        display: inline-block;
+        text-decoration: none;
+        text-transform: uppercase;
+        background-color: variables.$primary-color-hero-btn;
+        color: variables.$primary-color-black;
+        font-weight: 700;
+        padding: 10px 18px;
+        border-radius: 7px;
+        border: 1px solid #c0c408;
+        box-shadow: 0px 0px 18px #e5e90a99;
+        transition: box-shadow 0.15s ease;
+
+        &:hover {
+            box-shadow: 0px 0px 28px #e5e90a99;
+        }
+    }
+}
+
+.tickets {
+    position: relative;
+    padding: variables.$padding-all-section;
+    background-color: variables.$bg-color-black;
+    color: variables.$primary-color-white;
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    scroll-margin-top: 60px;
+
+    h2 {
+        font-size: 20px;
+        padding: 10px 20px;
+        font-weight: 600;
+        background-color: variables.$bg-color-lightblue;
+        border-bottom: variables.$border;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    tr {
+        border-bottom: variables.$border;
+    }
+
+    th {
+        font-size: 14px;
+        font-weight: normal;
+        filter: brightness(0.8);
+    }
+
+    th,
+    td {
+        padding: 10px 10px;
+    }
+
+    td {
+        background-color: variables.$bg-color-dark-blue;
+    }
+
+    .tickets__table {
+        border-radius: 0px 0px 10px 10px;
+        overflow: hidden;
+    }
+
+    .tickets__table-header {
+        background-color: variables.$bg-color-lightblue;
+    }
+
+    .tickets__container {
+        display: inline-block;
+        text-align: left;
+        border: variables.$border;
+        border-radius: 10px;
+    }
+
+    .tickets__ticket-btn {
+        display: inline-block;
+        justify-content: center;
+        background-color: variables.$primary-color-ticket-btn;
+        color: variables.$primary-color-white;
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        transition: background-color 0.1s ease;
+
+        &:hover {
+            background-color: variables.$primary-color-ticket-btn-hover;
+        }
+    }
+}
+
+.members {
+    position: relative;
+    padding: variables.$padding-all-section;
+    background-color: variables.$bg-color-black;
+    color: variables.$primary-color-white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    scroll-margin-top: 60px;
+
+    h2 {
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+    .members__container {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+        width: 100%;
+        list-style: none;
+        padding: 0 50px;
+    }
+
+    .members__card {
+        border: variables.$border;
+        border-radius: 8px;
+        overflow: hidden;
+        flex: 1;
+    }
+
+    img {
+        height: 220px;
+        width: 100%;
+        object-fit: cover;
+        object-position: 90% 10%;
+        display: flex;
+        justify-content: center;
+    }
+
+    figcaption {
+        background-color: variables.$bg-color-dark-blue;
+        padding: 8px 10px;
+    }
+}
+
+.history {
+    background: linear-gradient(130deg, #0f111a 0%, #171718 50%, #2d0f0f 100%);
+    padding: variables.$padding-all-section;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: variables.$primary-color-white;
+
+    .history__container h2 {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
+
+    .history__text img {
+        width: 400px;
+        height: 200px;
+        border: variables.$border;
+        float: right;
+        margin: 0 0 10px 10px;
+    }
+
+    .history__text p {
+        margin-bottom: 16px;
+    }
+}
+
+.contacts {
+    background: linear-gradient(130deg, #2d0f0f 0%, #171718 50%, #0f111a 100%);
+    padding: variables.$padding-all-section;
+    display: flex;
+    flex-direction: column;
+    color: variables.$primary-color-white;
+    gap: 15px;
+    scroll-margin-top: 60px;
+
+    h2 {
+        font-size: 26px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+        filter: brightness(0.8);
+        margin-bottom: 16px;
+    }
+
+    .contacts__content {
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+    }
+
+    .contacts__form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .contacts__form-row {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .contacts__field {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 0;
+
+        label {
+            filter: brightness(0.8);
+            margin-bottom: 5px;
+        }
+
+        input {
+            color: variables.$primary-color-white;
+            background-color: variables.$bg-color-dark-blue;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: variables.$border;
+
+            &:focus {
+                outline: none;
+                border: variables.$border;
+            }
+        }
+    }
+
+    .contacts__comment {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            filter: brightness(0.8);
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            color: variables.$primary-color-white;
+            background-color: variables.$bg-color-dark-blue;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: variables.$border;
+            min-width: 0;
+
+            &:focus {
+                outline: none;
+                border: variables.$border;
+            }
+        }
+    }
+
+    .contacts__button {
+        display: inline-block;
+        justify-content: center;
+        background-color: variables.$primary-color-ticket-btn;
+        color: variables.$primary-color-white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 120px;
+        border: variables.$border;
+        transition: background-color 0.1s ease;
+
+        &:hover {
+            background-color: variables.$primary-color-ticket-btn-hover;
+        }
+    }
+
+    .contacts__location {
+        display: flex;
+        flex-direction: column;
+        color: variables.$primary-color-white;
+        background-color: variables.$bg-color-dark-blue;
+        padding: 20px;
+        border-radius: 8px;
+        border: variables.$border;
+        flex: 1;
+        min-width: 0;
+
+        p {
+            text-align: left;
+            font-weight: 700;
+        }
+
+        iframe {
+            height: 280px;
+            width: 100%;
+            border-radius: 8px;
+            border: none;
+        }
+    }
+}
+
+.footer {
+    padding: variables.$padding-all-section;
+    background-color: variables.$bg-color-footer;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .footer__content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .footer__copyright {
+        color: variables.$primary-color-white;
+        filter: brightness(0.8);
+    }
+
+    .footer__socials {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        list-style: none;
+        color: variables.$primary-color-white;
+        filter: brightness(0.8);
+    }
+
+    .footer__contacts {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        list-style: none;
+        color: variables.$primary-color-white;
+    }
+
+    .connection a {
+        text-decoration: none;
+        color: variables.$primary-color-white;
+        transition: color 0.1s ease;
+
+        &:hover {
+            color: variables.$primary-color-ticket-btn;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .header {
+        padding: 16px 100px;
+    }
+
+    .hero {
+        padding: variables.$padding-hero-laptop;
+    }
+
+    .tickets {
+        position: relative;
+        padding: variables.$padding-all-section-laptop;
+
+        .tickets__ticket-btn {
+            text-align: center;
+        }
+    }
+
+    .members {
+        position: relative;
+        padding: variables.$padding-all-section-laptop;
+
+        .members__container {
+            gap: 25px;
+            padding: 0 30px;
+        }
+    }
+
+    .history {
+        padding: variables.$padding-all-section-laptop;
+
+        .history__text img {
+            width: 300px;
+            height: 160px;
+        }
+    }
+
+    .contacts {
+        padding: variables.$padding-all-section-laptop;
+
+        .contacts__content {
+            gap: 30px;
+        }
+
+        .contacts__form {
+            gap: 20px;
+            flex: 1;
+        }
+
+        .contacts__field {
+            input {
+                padding: 6px 8px;
+            }
+        }
+
+        .contacts__comment {
+            textarea {
+                padding: 6px 8px;
+            }
+        }
+
+        .contacts__location {
+            padding: 12px;
+
+            iframe {
+                height: 200px;
+                width: 100%;
+                border-radius: 8px;
+                border: none;
+            }
+        }
+    }
+
+    .footer {
+        padding: variables.$padding-all-section-laptop;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 16px 35px;
+
+        .header__burger {
+            display: flex;
+        }
+
+        .header__nav {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 260px;
+            background-color: variables.$bg-color-header;
+            border: variables.$border;
+            border-radius: 12px;
+            padding: 40px 30px;
+            box-shadow: 0 0px 150px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition:
+                opacity 0.1s ease,
+                transform 0.1s ease,
+                visibility 0.1s ease;
+            z-index: 18;
+
+            .header__menu {
+                flex-direction: column;
+                gap: 24px;
+                align-items: center;
+            }
+        }
+
+        .header__burger-checkbox:checked ~ .header__nav {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+
+    .hero {
+        padding: variables.$padding-hero-tablet;
+    }
+
+    .tickets {
+        padding: variables.$padding-all-section-tablet;
+    }
+
+    .members {
+        padding: variables.$padding-all-section-tablet;
+
+        .members__container {
+            flex-direction: column;
+            gap: 25px;
+            padding: 0 30px;
+        }
+    }
+
+    .history {
+        padding: variables.$padding-all-section-tablet;
+    }
+
+    .contacts {
+        padding: variables.$padding-all-section-tablet;
+
+        .contacts__content {
+            flex-direction: column;
+        }
+    }
+
+    .footer {
+        padding: variables.$padding-all-section-tablet;
+    }
+}
+
+@media (max-width: 650px) {
+    .history {
+        .history__text img {
+            width: 250px;
+            height: 140px;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .header {
+        padding: 16px 20px;
+    }
+
+    .hero {
+        padding: variables.$padding-hero-mobile;
+    }
+
+    .tickets {
+        position: relative;
+        padding: variables.$padding-all-section-mobile;
+    }
+
+    .members {
+        position: relative;
+        padding: variables.$padding-all-section-mobile;
+
+        .members__container {
+            flex-direction: column;
+            gap: 25px;
+            padding: 0 30px;
+        }
+    }
+
+    .history {
+        padding: variables.$padding-all-section-mobile;
+
+        .history__text img {
+            width: 100%;
+            height: 220px;
+            float: top;
+        }
+    }
+
+    .contacts {
+        padding: variables.$padding-all-section-mobile;
+
+        .contacts__content {
+            flex-direction: column;
+        }
+    }
+
+    .footer {
+        padding: variables.$padding-all-section-mobile;
+        .footer__content {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+}
